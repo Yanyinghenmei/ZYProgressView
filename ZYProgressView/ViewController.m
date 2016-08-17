@@ -13,7 +13,9 @@
 
 @end
 
-@implementation ViewController
+@implementation ViewController {
+    ZYProgressView *pro;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -27,10 +29,28 @@
     proView.trackTintColor = [UIColor cyanColor];
     proView.tintColor = [UIColor orangeColor];
     
-    ZYProgressView *pro = [[ZYProgressView alloc] initWithFrame:CGRectMake(10, 200, 300, 50)];
+    pro = [[ZYProgressView alloc] initWithFrame:CGRectMake(10, 200, 300, 30)];
     [self.view addSubview:pro];
-    pro.backgroundColor = [UIColor colorWithRed:241/255.00 green:241/255.00 blue:241/255.00 alpha:1];
-    pro.progress = 0.67;
+    pro.isSlider = YES;
+    pro.panGesBlock = ^(CGFloat progress) {
+//        NSLog(@"%f", progress);
+    };
+    
+    
+//    pro.progressType = 1;
+//    pro.backColor = [UIColor lightGrayColor];
+//    pro.progressColors = @[(id)[UIColor yellowColor].CGColor, (id)[UIColor blueColor].CGColor];
+    
+    
+    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(150, CGRectGetMaxY(pro.frame)+100, 80, 50)];
+    [self.view addSubview:btn];
+    btn.backgroundColor = [UIColor orangeColor];
+    [btn setTitle:@"click" forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)btnClick:(UIButton *)btn {
+    pro.progress = arc4random()%100/100.00;
 }
 
 - (void)didReceiveMemoryWarning {

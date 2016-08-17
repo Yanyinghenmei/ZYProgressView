@@ -226,6 +226,7 @@
 				TargetAttributes = {
 					657242401CE47CAA0093E82E = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = 88XM33BXWL;
 					};
 					657242591CE47CAA0093E82E = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -433,6 +434,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = ZYProgressView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = demo.ZYProgressView;
@@ -444,6 +446,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = ZYProgressView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = demo.ZYProgressView;
@@ -518,6 +521,7 @@
 				657242701CE47CAA0093E82E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		657242711CE47CAA0093E82E /* Build configuration list for PBXNativeTarget "ZYProgressViewTests" */ = {
 			isa = XCConfigurationList;
@@ -526,6 +530,7 @@
 				657242731CE47CAA0093E82E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		657242741CE47CAA0093E82E /* Build configuration list for PBXNativeTarget "ZYProgressViewUITests" */ = {
 			isa = XCConfigurationList;
@@ -534,6 +539,7 @@
 				657242761CE47CAA0093E82E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
