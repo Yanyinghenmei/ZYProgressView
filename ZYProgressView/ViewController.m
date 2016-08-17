@@ -33,7 +33,7 @@
     [self.view addSubview:pro];
     pro.isSlider = YES;
     pro.panGesBlock = ^(CGFloat progress) {
-//        NSLog(@"%f", progress);
+        NSLog(@"%f", progress);
     };
     
     

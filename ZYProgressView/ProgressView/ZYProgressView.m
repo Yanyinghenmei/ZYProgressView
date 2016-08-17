@@ -200,7 +200,6 @@
         location.x = 0;
         return;
     }
-    NSLog(@"%f", location.x);
     
     self.sliderView.center = CGPointMake(location.x, self.frame.size.height/2);
     
