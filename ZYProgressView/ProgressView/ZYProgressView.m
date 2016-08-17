@@ -166,6 +166,8 @@
     [_gradientLayer addAnimation:animation2 forKey:@"position"];
     [_sliderView.layer addAnimation:animation3 forKey:@"position"];
     [_progressLab.layer addAnimation:animation4 forKey:@"position"];
+    
+    _sliderView.center = CGPointMake(frame.size.width - frame.size.height/2, frame.size.height/2);
 }
 
 - (void)setIsSlider:(BOOL)isSlider {
