@@ -23,21 +23,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    
-    UIProgressView *proView = [[UIProgressView alloc] initWithFrame:CGRectMake(10, 100, 200, 50)];
-    [self.view addSubview:proView];
-    proView.progress = 0.55;
-
-    proView.trackTintColor = [UIColor cyanColor];
-    proView.tintColor = [UIColor orangeColor];
-    
-    
+    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(10, 100, 300, 30)];
+    lab.backgroundColor = [UIColor purpleColor];
+    lab.textColor = [UIColor whiteColor];
+    [self.view addSubview:lab];
     
     pro = [[ZYProgressView alloc] initWithFrame:CGRectMake(10, 200, 300, 30)];
     [self.view addSubview:pro];
     pro.isSlider = YES;
     pro.panGesBlock = ^(CGFloat progress) {
-        NSLog(@"%f", progress);
+        lab.text = [NSString stringWithFormat:@"%f", progress];
     };
     
     //    pro.progressType = 1;
@@ -48,7 +43,7 @@
     
     pro1 = [[ZYProgressView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(pro.frame)+ 30, 300, 30)];
     [self.view addSubview:pro1];
-    pro1.progress = 0.76;
+    pro1.progress = 1;
     
     
     pro2 = [[ZYProgressView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(pro1.frame)+ 30, 300, 30)];

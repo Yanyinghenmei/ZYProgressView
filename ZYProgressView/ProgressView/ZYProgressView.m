@@ -16,11 +16,12 @@
 
 @implementation ZYProgressView {
     CGFloat sliderWidth;
+    UIPanGestureRecognizer *swipeGes;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-
+        
         // 设置默属性
         _backColor = [UIColor blackColor];
         _progressColors = @[(id)[UIColor colorWithRed:16/255.00 green:126/255.00 blue:214/255.00 alpha:1].CGColor,
@@ -94,7 +95,7 @@
 // 渐变层
 - (CAGradientLayer *)gradientLayer {
     if (!_gradientLayer) {
-
+        
         _gradientLayer = [CAGradientLayer new];
         _gradientLayer.bounds = CGRectMake(0, 0, self.frame.size.height, self.frame.size.height);
         _gradientLayer.position = CGPointMake(self.frame.size.height/2, _tintImgView.bounds.size.height/2);
@@ -119,7 +120,6 @@
     double duration = fabs (_progress - progress)  * 1.50;
     _progress = progress;
     
-    
     self.progressLab.text = [NSString stringWithFormat:@"%d%%", (int)(_progress *100)];
     
     if (_progressType == ProgressTypeMaskImage) {
@@ -127,47 +127,55 @@
     }
     
     CGRect frame = _gradientLayer.bounds;
-    CGFloat progressWidth = self.frame.size.width * progress;
+    CGFloat progressWidth = (self.frame.size.width - self.frame.size.height) * progress + self.frame.size.height;
     if (progressWidth < self.frame.size.height) {
         progressWidth = self.frame.size.height;
     }
     
-    frame.size.width = progressWidth;;
+    frame.size.width = progressWidth;
     
-    CABasicAnimation *animation1 = [CABasicAnimation animationWithKeyPath:@"bounds"];
+    // 滑动的时候不修改model layer
+    [UIView animateWithDuration:duration animations:^{
+        self.progressLab.alpha =_progress * 3 - 0.3;
+    } completion:^(BOOL finished) {
+        if (swipeGes && !swipeGes.state) {
+            _sliderView.center = CGPointMake(frame.size.width - frame.size.height/2, frame.size.height/2);
+        }
+    }];
+    
+    CABasicAnimation *animation1 = [CABasicAnimation animationWithKeyPath:@"bounds.size.width"];
     animation1.duration = duration;
-    animation1.fromValue = [_gradientLayer.presentationLayer valueForKeyPath:@"bounds"];
-    animation1.toValue = [NSValue valueWithCGRect:frame];
+    animation1.fromValue = [_gradientLayer.presentationLayer valueForKeyPath:@"bounds.size.width"];
+    animation1.toValue = @(progressWidth);
     animation1.fillMode = kCAFillModeForwards;
     animation1.removedOnCompletion = NO;
     
-    CABasicAnimation *animation2 = [CABasicAnimation animationWithKeyPath:@"position"];
+    CABasicAnimation *animation2 = [CABasicAnimation animationWithKeyPath:@"position.x"];
     animation2.duration = duration;
-    animation2.fromValue = [_gradientLayer.presentationLayer valueForKeyPath:@"position"];
-    animation2.toValue = [NSValue valueWithCGPoint:CGPointMake(frame.size.width/2, frame.size.height/2)];
+    animation2.fromValue = [_gradientLayer.presentationLayer valueForKeyPath:@"position.x"];
+    animation2.toValue = @(progressWidth/2);
     animation2.fillMode = kCAFillModeForwards;
     animation2.removedOnCompletion = NO;
     
-    CABasicAnimation *animation3 = [CABasicAnimation animationWithKeyPath:@"position"];
+    CABasicAnimation *animation3 = [CABasicAnimation animationWithKeyPath:@"position.x"];
     animation3.duration = duration;
-    animation3.fromValue = [_sliderView.layer.presentationLayer valueForKeyPath:@"position"];
-    animation3.toValue = [NSValue valueWithCGPoint:CGPointMake(frame.size.width - frame.size.height/2, frame.size.height/2)];
+    animation3.fromValue = [_sliderView.layer.presentationLayer valueForKeyPath:@"position.x"];
+    animation3.toValue = @(progressWidth - frame.size.height/2);
     animation3.fillMode = kCAFillModeForwards;
     animation3.removedOnCompletion = NO;
     
-    CABasicAnimation *animation4 = [CABasicAnimation animationWithKeyPath:@"position"];
+    CABasicAnimation *animation4 = [CABasicAnimation animationWithKeyPath:@"position.x"];
     animation4.duration = duration;
-    animation4.fromValue = [_progressLab.layer.presentationLayer valueForKeyPath:@"position"];
-    animation4.toValue = [NSValue valueWithCGPoint:CGPointMake(progressWidth-self.frame.size.height-self.frame.size.width/3/2, self.frame.size.height/2)];
+    animation4.fromValue = [_progressLab.layer.presentationLayer valueForKeyPath:@"position.x"];
+    animation4.toValue = @(progressWidth-self.frame.size.height-self.frame.size.width/3/2);
     animation4.fillMode = kCAFillModeForwards;
     animation4.removedOnCompletion = NO;
     
     [_gradientLayer addAnimation:animation1 forKey:@"bounds"];
-    [_gradientLayer addAnimation:animation2 forKey:@"position"];
-    [_sliderView.layer addAnimation:animation3 forKey:@"position"];
-    [_progressLab.layer addAnimation:animation4 forKey:@"position"];
+    [_gradientLayer addAnimation:animation2 forKey:@"position1"];
+    [_sliderView.layer addAnimation:animation3 forKey:@"position2"];
+    [_progressLab.layer addAnimation:animation4 forKey:@"position3"];
     
-    _sliderView.center = CGPointMake(frame.size.width - frame.size.height/2, frame.size.height/2);
 }
 
 - (void)setIsSlider:(BOOL)isSlider {
@@ -186,7 +194,7 @@
         self.sliderView.layer.cornerRadius = sliderWidth/2;
         
         self.sliderView.userInteractionEnabled = YES;
-        UIPanGestureRecognizer *swipeGes = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(swipe:)];
+        swipeGes = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(swipe:)];
         [self.sliderView addGestureRecognizer:swipeGes];
     }
 }
