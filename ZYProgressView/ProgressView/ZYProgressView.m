@@ -205,9 +205,15 @@
     
     if (location.x>self.frame.size.width) {
         location.x = self.frame.size.width;
+        if (_panGesBlock) {
+            _panGesBlock(1.00);
+        }
         return;
     } else if (location.x<0) {
         location.x = 0;
+        if (_panGesBlock) {
+            _panGesBlock(0.00);
+        }
         return;
     }
     
