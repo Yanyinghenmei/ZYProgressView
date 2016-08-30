@@ -24,7 +24,7 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(10, 100, 300, 30)];
-    lab.backgroundColor = [UIColor purpleColor];
+    lab.backgroundColor = [UIColor orangeColor];
     lab.textColor = [UIColor whiteColor];
     [self.view addSubview:lab];
     

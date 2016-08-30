@@ -65,7 +65,13 @@
         _sliderView.center = CGPointMake(self.frame.size.height - self.frame.size.height/2, self.frame.size.height/2);
         _sliderView.backgroundColor = [UIColor whiteColor];
         _sliderView.layer.cornerRadius = sliderWidth/2;
-        _sliderView.layer.masksToBounds = YES;
+//        _sliderView.layer.masksToBounds = YES;
+        
+        // 阴影
+        _sliderView.layer.shadowColor = [UIColor lightGrayColor].CGColor;
+        _sliderView.layer.shadowOffset = CGSizeMake(0, 0);
+        _sliderView.layer.shadowOpacity = 0.8;
+        _sliderView.layer.shadowRadius = 1;
     }
     return _sliderView;
 }
